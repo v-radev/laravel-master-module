@@ -2,6 +2,8 @@
 
 namespace App\Clusters\MainCluster\Repositories\Contracts;
 
+use Illuminate\Database\Eloquent\Model;
+
 interface RepositoryInterface
 {
 
@@ -35,14 +37,14 @@ interface RepositoryInterface
      *
      * @return mixed
      */
-    public function update( array $data, $model );
+    public function update( array $data, Model $model );
 
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return mixed
      */
-    public function delete( $model );
+    public function delete( Model $model );
 
     /**
      * @param       $id

@@ -51,9 +51,9 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
     public function __call( $name, $arguments )
     {
         if ( method_exists( $this, $name ) ) { // method exists in the repository
-            return $this->{$name}( $arguments );
+            return call_user_func_array([$this, $name], $arguments);
         } elseif ( method_exists( $this->model, $name ) ) { // method exists in the model
-            return $this->model->{$name}( $arguments );
+            return call_user_func_array([$this->model, $name], $arguments);
         } else {
             try { // try to call static method to model ( e.g scopeSomething )
                 return forward_static_call_array( [ $this->model, $name ], $arguments );
@@ -78,7 +78,7 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
      *
      * @return array
      */
-    public function lists( $value, $key = NULL )
+    public function lists( $value, $key = null )
     {
         $this->applyCriteria();
 
@@ -132,7 +132,7 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
      */
     protected function applyOptions( array &$options )
     {
-        $defaults = [ 'columns' => [ '*' ], 'trashed' => false, 'with' => [ ] ];
+        $defaults = ['columns' => ['*'], 'trashed' => false, 'with' => [], 'order_by' => null];
         $options = array_merge( $defaults, $options );
 
         $chain = $this->model;
@@ -141,10 +141,24 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
             $chain = $chain->withTrashed();
         }
 
+        if ( $options['order_by'] ) {
+            $chain = $chain->orderBy( $options['order_by'] );
+        }
+
         if ( !empty( $options['with'] ) ) {
             $chain = $chain->with( $options['with'] );
         }
 
         $this->model = $chain;
+    }
+
+    /**
+     * Apply options on the query builder
+     *
+     * @param $options
+     */
+    public function setOptions( $options = ['trashed' => false, 'with' => []] )
+    {
+        $this->applyOptions( $options );
     }
 }

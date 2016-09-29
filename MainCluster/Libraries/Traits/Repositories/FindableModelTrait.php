@@ -29,7 +29,7 @@ trait FindableModelTrait
      *
      * @return mixed
      */
-    public function find( $id, $columns = [ '*' ] )
+    public function find( $id, $columns = ['*'] )
     {
         $this->applyCriteria();
 
@@ -43,7 +43,7 @@ trait FindableModelTrait
      * @return mixed
      *
      */
-    public function findOrFail( $id, $options = [ 'columns' => [ '*' ], 'trashed' => false, 'with' => [ ] ] )
+    public function findOrFail( $id, $options = ['columns' => ['*'], 'trashed' => false, 'with' => []] )
     {
         $this->applyCriteria();
 
@@ -59,7 +59,7 @@ trait FindableModelTrait
      *
      * @return mixed
      */
-    public function findBy( $attribute, $value, $columns = [ '*' ] )
+    public function findBy( $attribute, $value, $columns = ['*'] )
     {
         $this->applyCriteria();
 
@@ -73,7 +73,7 @@ trait FindableModelTrait
      *
      * @return mixed
      */
-    public function findAllBy( $attribute, $value, $columns = [ '*' ] )
+    public function findAllBy( $attribute, $value, $columns = ['*'] )
     {
         $this->applyCriteria();
 
@@ -89,7 +89,7 @@ trait FindableModelTrait
      *
      * @return \Illuminate\Database\Eloquent\Collection|null
      */
-    public function findWhere( $where, $columns = [ '*' ], $or = false )
+    public function findWhere( $where, $columns = ['*'], $or = false )
     {
         $this->applyCriteria();
 

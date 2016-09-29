@@ -3,6 +3,7 @@
 namespace App\Clusters\MainCluster\Libraries\Traits\Repositories;
 
 use App\Clusters\MainCluster\Repositories\Repository;
+use Illuminate\Database\Eloquent\Model;
 
 trait CrudableModelTrait
 {
@@ -30,7 +31,7 @@ trait CrudableModelTrait
      * @return mixed
      *
      */
-    public function all( $options = [ 'columns' => [ '*' ], 'trashed' => false, 'with' => [ ] ] )
+    public function all( $options = ['columns' => ['*'], 'trashed' => false, 'with' => [], 'order_by' => null] )
     {
         $this->applyCriteria();
 
@@ -55,7 +56,7 @@ trait CrudableModelTrait
      *
      * @return mixed
      */
-    public function update( array $data, $model )
+    public function update( array $data, Model $model )
     {
         return $model->update( $data );
     }
@@ -65,7 +66,7 @@ trait CrudableModelTrait
      *
      * @return mixed
      */
-    public function delete( $model )
+    public function delete( Model $model )
     {
         return $model->delete();
     }
