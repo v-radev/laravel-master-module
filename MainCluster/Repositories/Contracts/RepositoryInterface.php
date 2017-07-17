@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Clusters\MainCluster\Repositories\Contracts;
+namespace Clusters\MainCluster\Repositories\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +13,7 @@ interface RepositoryInterface
      * @return mixed
      *
      */
-    public function all( $options = [ 'columns' => [ '*' ], 'trashed' => false, 'with' => [ ] ] );
+    public function all($options = ['columns' => ['*'], 'trashed' => false, 'with' => []]);
 
     /**
      * @param int   $perPage
@@ -22,14 +22,14 @@ interface RepositoryInterface
      * @return mixed
      *
      */
-    public function paginate( $perPage = 1, $options = [ 'columns' => [ '*' ], 'trashed' => false, 'with' => [ ] ] );
+    public function paginate($perPage = 1, $options = ['columns' => ['*'], 'trashed' => false, 'with' => []]);
 
     /**
      * @param array $data
      *
      * @return mixed
      */
-    public function create( array $data );
+    public function create(array $data);
 
     /**
      * @param array                              $data
@@ -37,14 +37,14 @@ interface RepositoryInterface
      *
      * @return mixed
      */
-    public function update( array $data, Model $model );
+    public function update(array $data, Model $model);
 
     /**
      * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return mixed
      */
-    public function delete( Model $model );
+    public function delete(Model $model);
 
     /**
      * @param       $id
@@ -52,7 +52,7 @@ interface RepositoryInterface
      *
      * @return mixed
      */
-    public function find( $id, $columns = [ '*' ] );
+    public function find($id, $columns = ['*']);
 
     /**
      * @param       $id
@@ -61,7 +61,7 @@ interface RepositoryInterface
      * @return mixed
      *
      */
-    public function findOrFail( $id, $options = [ 'columns' => [ '*' ], 'trashed' => false, 'with' => [ ] ] );
+    public function findOrFail($id, $options = ['columns' => ['*'], 'trashed' => false, 'with' => []]);
 
     /**
      * @param       $field
@@ -70,7 +70,7 @@ interface RepositoryInterface
      *
      * @return mixed
      */
-    public function findBy( $field, $value, $columns = [ '*' ] );
+    public function findBy($field, $value, $columns = ['*']);
 
     /**
      * @param       $field
@@ -79,7 +79,7 @@ interface RepositoryInterface
      *
      * @return mixed
      */
-    public function findAllBy( $field, $value, $columns = [ '*' ] );
+    public function findAllBy($field, $value, $columns = ['*']);
 
     /**
      * @param       $where
@@ -87,6 +87,6 @@ interface RepositoryInterface
      *
      * @return mixed
      */
-    public function findWhere( $where, $columns = [ '*' ] );
+    public function findWhere($where, $columns = ['*']);
 
 }

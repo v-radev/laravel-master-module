@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Clusters\MainCluster\Libraries\Traits\Repositories;
+namespace Clusters\MainCluster\Libraries\Traits\Repositories;
 
-use App\Clusters\MainCluster\Repositories\Criteria;
-use App\Clusters\MainCluster\Repositories\Repository;
+use Clusters\MainCluster\Repositories\Criteria;
+use Clusters\MainCluster\Repositories\Repository;
 use Illuminate\Database\Eloquent\Collection;
 
 trait CriteriableModelTrait
@@ -25,7 +25,7 @@ trait CriteriableModelTrait
      */
     public function resetScope()
     {
-        $this->skipCriteria( false );
+        $this->skipCriteria(false);
 
         return $this;
     }
@@ -35,7 +35,7 @@ trait CriteriableModelTrait
      *
      * @return $this
      */
-    public function skipCriteria( $status = true )
+    public function skipCriteria($status = true)
     {
         $this->skipCriteria = $status;
 
@@ -55,9 +55,9 @@ trait CriteriableModelTrait
      *
      * @return $this
      */
-    public function getByCriteria( Criteria $criteria )
+    public function getByCriteria(Criteria $criteria)
     {
-        $this->model = $criteria->apply( $this->model, $this );
+        $this->model = $criteria->apply($this->model, $this);
 
         return $this;
     }
@@ -67,9 +67,9 @@ trait CriteriableModelTrait
      *
      * @return $this
      */
-    public function pushCriteria( Criteria $criteria )
+    public function pushCriteria(Criteria $criteria)
     {
-        $this->criteria->push( $criteria );
+        $this->criteria->push($criteria);
 
         return $this;
     }
@@ -85,9 +85,9 @@ trait CriteriableModelTrait
             return $this;
         }
 
-        foreach ( $this->getCriteria() as $criteria ) {
+        foreach ($this->getCriteria() as $criteria) {
             if ( $criteria instanceof Criteria ) {
-                $this->model = $criteria->apply( $this->model, $this );
+                $this->model = $criteria->apply($this->model, $this);
             }
         }
 

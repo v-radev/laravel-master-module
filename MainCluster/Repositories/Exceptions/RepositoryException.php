@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Clusters\MainCluster\Repositories\Exceptions;
+namespace Clusters\MainCluster\Repositories\Exceptions;
 
 class RepositoryException extends \Exception
 {
+    //
 }

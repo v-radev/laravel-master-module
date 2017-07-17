@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Clusters\MainCluster\Libraries\Traits\Repositories;
+namespace Clusters\MainCluster\Libraries\Traits\Repositories;
 
-use App\Clusters\MainCluster\Repositories\Repository;
+use Clusters\MainCluster\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model;
 
 trait CrudableModelTrait
@@ -15,7 +15,7 @@ trait CrudableModelTrait
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected abstract function applyOptions( array &$options );
+    protected abstract function applyOptions(array &$options);
 
     /**
      * Apply criteria to the model query
@@ -31,13 +31,13 @@ trait CrudableModelTrait
      * @return mixed
      *
      */
-    public function all( $options = ['columns' => ['*'], 'trashed' => false, 'with' => [], 'order_by' => null] )
+    public function all($options = ['columns' => ['*'], 'trashed' => false, 'with' => [], 'order_by' => null])
     {
         $this->applyCriteria();
 
-        $this->applyOptions( $options );
+        $this->applyOptions($options);
 
-        return $this->model->get( $options['columns'] );
+        return $this->model->get($options['columns']);
     }
 
     /**
@@ -45,20 +45,20 @@ trait CrudableModelTrait
      *
      * @return mixed
      */
-    public function create( array $data )
+    public function create(array $data)
     {
-        return $this->model->create( $data );
+        return $this->model->create($data);
     }
 
     /**
-     * @param array                              $data
+     * @param array                               $data
      * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @return mixed
      */
-    public function update( array $data, Model $model )
+    public function update(array $data, Model $model)
     {
-        return $model->update( $data );
+        return $model->update($data);
     }
 
     /**
@@ -66,7 +66,7 @@ trait CrudableModelTrait
      *
      * @return mixed
      */
-    public function delete( Model $model )
+    public function delete(Model $model)
     {
         return $model->delete();
     }

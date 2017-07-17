@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Clusters\MainCluster\Libraries\Traits\Repositories;
+namespace Clusters\MainCluster\Libraries\Traits\Repositories;
 
-use App\Clusters\MainCluster\Repositories\QueryFilter;
-use App\Clusters\MainCluster\Repositories\Repository;
+use Clusters\MainCluster\Repositories\QueryFilter;
+use Clusters\MainCluster\Repositories\Repository;
 use Illuminate\Database\Eloquent\Builder;
 
 trait FilterableModelTrait
@@ -16,7 +16,7 @@ trait FilterableModelTrait
      *
      * @return Builder
      */
-    public function scopeFilter( $builder, QueryFilter $filters )
+    public function scopeFilter($builder, QueryFilter $filters)
     {
         return $filters->apply( $this->getRepo() );
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Clusters\MainCluster\Repositories\Contracts;
+namespace Clusters\MainCluster\Repositories\Contracts;
 
-use App\Clusters\MainCluster\Repositories\Criteria;
+use Clusters\MainCluster\Repositories\Criteria;
 
 interface CriteriaInterface
 {
@@ -12,7 +12,7 @@ interface CriteriaInterface
      *
      * @return $this
      */
-    public function skipCriteria( $status = true );
+    public function skipCriteria($status = true);
 
     /**
      * @return mixed
@@ -24,14 +24,14 @@ interface CriteriaInterface
      *
      * @return $this
      */
-    public function getByCriteria( Criteria $criteria );
+    public function getByCriteria(Criteria $criteria);
 
     /**
      * @param Criteria $criteria
      *
      * @return $this
      */
-    public function pushCriteria( Criteria $criteria );
+    public function pushCriteria(Criteria $criteria);
 
     /**
      * @return $this

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Clusters\MainCluster\Repositories;
+namespace Clusters\MainCluster\Repositories;
 
-use App\Clusters\MainCluster\Libraries\Traits\Repositories\CriteriableModelTrait;
-use App\Clusters\MainCluster\Libraries\Traits\Repositories\CrudableModelTrait;
-use App\Clusters\MainCluster\Libraries\Traits\Repositories\FindableModelTrait;
-use App\Clusters\MainCluster\Repositories\Contracts\CriteriaInterface;
-use App\Clusters\MainCluster\Repositories\Contracts\RepositoryInterface;
-use App\Clusters\MainCluster\Repositories\Exceptions\RepositoryException;
+use Clusters\MainCluster\Libraries\Traits\Repositories\CriteriableModelTrait;
+use Clusters\MainCluster\Libraries\Traits\Repositories\CrudableModelTrait;
+use Clusters\MainCluster\Libraries\Traits\Repositories\FindableModelTrait;
+use Clusters\MainCluster\Repositories\Contracts\CriteriaInterface;
+use Clusters\MainCluster\Repositories\Contracts\RepositoryInterface;
+use Clusters\MainCluster\Repositories\Exceptions\RepositoryException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Container\Container as App;
@@ -39,7 +39,7 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
      *
      * @throws RepositoryException
      */
-    public function __construct( App $app, Collection $collection )
+    public function __construct(App $app, Collection $collection)
     {
         $this->app = $app;
         $this->criteria = $collection;
@@ -48,17 +48,17 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
         $this->makeModel();
     }
 
-    public function __call( $name, $arguments )
+    public function __call($name, $arguments)
     {
-        if ( method_exists( $this, $name ) ) { // method exists in the repository
+        if ( method_exists($this, $name) ) { // method exists in the repository
             return call_user_func_array([$this, $name], $arguments);
-        } elseif ( method_exists( $this->model, $name ) ) { // method exists in the model
+        } elseif ( method_exists($this->model, $name) ) { // method exists in the model
             return call_user_func_array([$this->model, $name], $arguments);
         } else {
             try { // try to call static method to model ( e.g scopeSomething )
-                return forward_static_call_array( [ $this->model, $name ], $arguments );
+                return forward_static_call_array([$this->model, $name], $arguments);
             } catch( Exception $e ) {
-                throw new MethodNotFoundException( 'Method "'. $name .'" does not exist!', __CLASS__, $name );
+                throw new MethodNotFoundException('Method "'. $name .'" does not exist!', __CLASS__, $name);
             }
         }
     }
@@ -78,13 +78,13 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
      *
      * @return array
      */
-    public function lists( $value, $key = null )
+    public function lists($value, $key = null)
     {
         $this->applyCriteria();
 
-        $lists = $this->model->lists( $value, $key );
+        $lists = $this->model->lists($value, $key);
 
-        if ( is_array( $lists ) ) {
+        if ( is_array($lists) ) {
             return $lists;
         }
 
@@ -98,13 +98,13 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
      * @return mixed
      *
      */
-    public function paginate( $perPage = 1, $options = [ 'columns' => [ '*' ], 'trashed' => false, 'with' => [ ] ] )
+    public function paginate($perPage = 1, $options = ['columns' => ['*'], 'trashed' => false, 'with' => []])
     {
         $this->applyCriteria();
 
-        $this->applyOptions( $options );
+        $this->applyOptions($options);
 
-        return $this->model->paginate( $perPage, $options['columns'] );
+        return $this->model->paginate($perPage, $options['columns']);
     }
 
 
@@ -117,7 +117,7 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
         $model = $this->app->make( $this->model() );
 
         if ( !$model instanceof Model ) {
-            throw new RepositoryException( "Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model" );
+            throw new RepositoryException("Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model");
         }
 
         return $this->model = $model;
@@ -130,10 +130,10 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function applyOptions( array &$options )
+    protected function applyOptions(array &$options)
     {
         $defaults = ['columns' => ['*'], 'trashed' => false, 'with' => [], 'order_by' => null];
-        $options = array_merge( $defaults, $options );
+        $options = array_merge($defaults, $options);
 
         $chain = $this->model;
 
@@ -142,11 +142,11 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
         }
 
         if ( $options['order_by'] ) {
-            $chain = $chain->orderBy( $options['order_by'] );
+            $chain = $chain->orderBy($options['order_by']);
         }
 
         if ( !empty( $options['with'] ) ) {
-            $chain = $chain->with( $options['with'] );
+            $chain = $chain->with($options['with']);
         }
 
         $this->model = $chain;
@@ -157,8 +157,8 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
      *
      * @param $options
      */
-    public function setOptions( $options = ['trashed' => false, 'with' => []] )
+    public function setOptions($options = ['trashed' => false, 'with' => []])
     {
-        $this->applyOptions( $options );
+        $this->applyOptions($options);
     }
 }

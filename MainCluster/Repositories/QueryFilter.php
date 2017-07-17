@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Clusters\MainCluster\Repositories;
+namespace Clusters\MainCluster\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ abstract class QueryFilter
      *
      * @param Request $request
      */
-    public function __construct( Request $request )
+    public function __construct(Request $request)
     {
         $this->request = $request;
     }
@@ -40,20 +40,20 @@ abstract class QueryFilter
      *
      * @return Builder
      */
-    public function apply( Repository $repository )
+    public function apply(Repository $repository)
     {
         $this->repository = $repository;
 
-        foreach ( $this->filters() as $name => $value ) {
-            $name = camel_case( $this->filterURLString( $name ) );
+        foreach ($this->filters() as $name => $value) {
+            $name = camel_case( $this->filterURLString($name) );
 
-            if ( !method_exists( $this, $name ) ) {
+            if ( !method_exists($this, $name) ) {
                 continue;
             }
 
-            if ( is_array( $value ) || $value !== false ) {
-                $value = is_array( $value ) ? array_map( [ $this, 'filterURLString' ], $value ) : $this->filterURLString( $value );
-                $this->$name( $value );
+            if ( is_array($value) || $value !== false ) {
+                $value = is_array($value) ? array_map([$this, 'filterURLString'], $value) : $this->filterURLString($value);
+                $this->$name($value);
             } else {
                 $this->$name();
             }
@@ -72,10 +72,10 @@ abstract class QueryFilter
         return $this->request->all();
     }
 
-    public function filterURLString( $string )
+    public function filterURLString($string)
     {
-        $string = preg_replace( '/[^ \w-]+/', '', $string );
-        $string = substr( $string, 0, 25 );
+        $string = preg_replace('/[^ \w-]+/', '', $string);
+        $string = substr($string, 0, 25);
 
         return $string;
     }
