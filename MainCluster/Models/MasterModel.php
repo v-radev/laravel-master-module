@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Clusters\MainCluster\Models;
+namespace Clusters\MainCluster\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MasterModel extends Model
+abstract class MasterModel extends Model
 {
 
     public static function tableName()
