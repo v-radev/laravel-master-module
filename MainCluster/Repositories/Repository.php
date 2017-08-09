@@ -23,26 +23,17 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
 
 
     /**
-     * @var App
-     */
-    private $app;
-
-    /**
      * @var Model
      */
     protected $model;
 
 
     /**
-     * @param App        $app
-     * @param Collection $collection
-     *
      * @throws RepositoryException
      */
-    public function __construct(App $app, Collection $collection)
+    public function __construct()
     {
-        $this->app = $app;
-        $this->criteria = $collection;
+        $this->criteria = collect();
 
         $this->resetScope();
         $this->makeModel();
@@ -114,7 +105,7 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
      */
     public function makeModel()
     {
-        $model = $this->app->make( $this->model() );
+        $model = app()->make($this->model());
 
         if ( !$model instanceof Model ) {
             throw new RepositoryException("Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model");
