@@ -11,8 +11,8 @@ use Clusters\MainCluster\Repositories\Exceptions\RepositoryException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Container\Container as App;
-use League\Flysystem\Exception;
-use Prophecy\Exception\Doubler\MethodNotFoundException;
+use Exception;
+use BadMethodCallException;
 
 abstract class Repository implements RepositoryInterface, CriteriaInterface
 {
@@ -49,7 +49,7 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
             try { // try to call static method to model ( e.g scopeSomething )
                 return forward_static_call_array([$this->model, $name], $arguments);
             } catch( Exception $e ) {
-                throw new MethodNotFoundException('Method "'. $name .'" does not exist!', __CLASS__, $name);
+                throw new BadMethodCallException('Method "'. $name .'" does not exist!', __CLASS__, $name);
             }
         }
     }
